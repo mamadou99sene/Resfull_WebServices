@@ -36,15 +36,15 @@ Session session;
 	}
 }
 
-	public  Utilisateur connexion(String login) {
+	public  Utilisateur connexion(String password) {
 		Session session=null;
-		if (null == login ) {
+		if (null == password ) {
 			throw new IllegalArgumentException("Login and password are mandatory. Null values are forbidden.");
 		}		
 		try { session = sessionFactory.openSession();
 			// create a new criteria
 			Criteria crit = session.createCriteria(Utilisateur.class);
-			crit.add(Restrictions.eq("login", login.trim()));
+			crit.add(Restrictions.eq("password", password.trim()));
 			Object o=crit.uniqueResult();
 			if(o!=null) {
 			Utilisateur user = (Utilisateur)o;//sous-classement
@@ -68,7 +68,6 @@ Session session;
 		 session = sessionFactory.openSession();
 
 		try{Criteria crit = session.createCriteria(Utilisateur.class);
-		//crit.add(Restrictions.eq("categorie", "Utilisateur".trim()));
 			@SuppressWarnings("rawtypes")
 			List l=crit.list();
 			session.close();
@@ -88,7 +87,7 @@ Session session;
 			 session = sessionFactory.openSession();
 			// create a new criteria
 			Criteria crit = session.createCriteria(Utilisateur.class);
-			crit.add(Restrictions.eq("idparking", id));
+			crit.add(Restrictions.eq("idUtilisateur", id));
 
 			Utilisateur user = (Utilisateur)crit.uniqueResult();
 			if (user==null){session.close();return null;}
@@ -154,14 +153,14 @@ Session session;
 			return null;
 		}
 	}
-	public  Utilisateur findIfNumCarteExistePourAutreUser(String login, int idparking) {
+	public  Utilisateur findIfNumCarteExistePourAutreUser(String login, int iduser) {
 		Session session=null;
 		try {
 			 session = sessionFactory.openSession();
 			// create a new criteria
 			Criteria crit = session.createCriteria(Utilisateur.class);
 			crit.add(Restrictions.eq("login", login.trim()));
-			crit.add(Restrictions.ne("idparking", idparking));
+			crit.add(Restrictions.ne("idUtilisateur", iduser));
 			Utilisateur user = (Utilisateur)crit.uniqueResult();
 			if (user==null){session.close();return null;}
 			else {session.close();return user;}
@@ -232,7 +231,7 @@ Session session;
 		}
 	}
 	@SuppressWarnings("unchecked")
-	public int findNumberOfInstanceStructuredeSante() {
+	public int findNumberOfInstanceUtiliateur() {
 		Session session=null;
 		log.debug("finding Utilisateur instance by example");
 		try {session=sessionFactory.openSession();
@@ -265,12 +264,12 @@ Session session;
 	   // session.close();*/
 	    return xx;	
 	}
-	public Utilisateur getUserById(int idstructure){
+	public Utilisateur getUserById(int idUtilisateur){
 		//List<Classe> xx=new ArrayList<Classe>();
 	    Session session = sessionFactory.openSession ( );
-	    String SQL_QUERY ="from Utilisateur where idparking=:id";
+	    String SQL_QUERY ="from Utilisateur where idUtilisateur=:id";
 	    Query query = session.createQuery (SQL_QUERY);
-	    query.setInteger("id", idstructure);
+	    query.setInteger("id", idUtilisateur);
 	    @SuppressWarnings("rawtypes")
 		Utilisateur parking=(Utilisateur) query.uniqueResult();
 	    return parking;
