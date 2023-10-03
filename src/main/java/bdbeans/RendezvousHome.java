@@ -47,9 +47,9 @@ Session session;
 			crit.add(Restrictions.eq("login", login.trim()));
 			Object o=crit.uniqueResult();
 			if(o!=null) {
-			Rendezvous user = (Rendezvous)o;//sous-classement
+			Rendezvous rv = (Rendezvous)o;//sous-classement
 			session.close();
-			return user;
+			return rv;
 			}
 			else{session.close(); 
 			return null;}
@@ -64,7 +64,7 @@ Session session;
 		}*/
 	}
 	@SuppressWarnings("unchecked")
-	public List<Rendezvous> getAllParkings(){
+	public List<Rendezvous> getAllRendezVous(){
 		 session = sessionFactory.openSession();
 
 		try{Criteria crit = session.createCriteria(Rendezvous.class);
@@ -82,17 +82,17 @@ Session session;
 			return null;
 		}
 	}
-	public  Rendezvous  findParkingByID(int id){
+	public  Rendezvous  findRendezVousByID(int id){
 		Session session=null;
 		try {
 			 session = sessionFactory.openSession();
 			// create a new criteria
 			Criteria crit = session.createCriteria(Rendezvous.class);
-			crit.add(Restrictions.eq("idparking", id));
+			crit.add(Restrictions.eq("idRendezvous", id));
 
-			Rendezvous parking = (Rendezvous)crit.uniqueResult();
-			if (parking==null){session.close();return null;}
-			else {session.close();return parking;}
+			Rendezvous rv = (Rendezvous)crit.uniqueResult();
+			if (rv==null){session.close();return null;}
+			else {session.close();return rv;}
 		}
 		catch(Exception e) {
 			// Critical errors : database unreachable, etc.
@@ -144,9 +144,9 @@ Session session;
 			Criteria crit = session.createCriteria(Rendezvous.class);
 			crit.add(Restrictions.eq("telephone", telephone.trim()));
 
-			Rendezvous user = (Rendezvous)crit.uniqueResult();
-			if (user==null){session.close();return null;}
-			else {session.close();return user;}
+			Rendezvous rv = (Rendezvous)crit.uniqueResult();
+			if (rv==null){session.close();return null;}
+			else {session.close();return rv;}
 		}
 		catch(Exception e) {
 			// Critical errors : database unreachable, etc.
@@ -154,14 +154,14 @@ Session session;
 			return null;
 		}
 	}
-	public  Rendezvous findIfNumCarteExistePourAutreParking(String login, int idparking) {
+	public  Rendezvous findIfNumCarteExistePourAutreParking(String login, int idRendezvous) {
 		Session session=null;
 		try {
 			 session = sessionFactory.openSession();
 			// create a new criteria
 			Criteria crit = session.createCriteria(Rendezvous.class);
 			crit.add(Restrictions.eq("login", login.trim()));
-			crit.add(Restrictions.ne("idparking", idparking));
+			crit.add(Restrictions.ne("idRendezvous", idRendezvous));
 			Rendezvous user = (Rendezvous)crit.uniqueResult();
 			if (user==null){session.close();return null;}
 			else {session.close();return user;}
@@ -232,7 +232,7 @@ Session session;
 		}
 	}
 	@SuppressWarnings("unchecked")
-	public int findNumberOfInstanceparking() {
+	public int findNumberOfInstanceRendezVous() {
 		Session session=null;
 		log.debug("finding Rendezvous instance by example");
 		try {session=sessionFactory.openSession();
@@ -248,7 +248,7 @@ Session session;
 			throw re;
 		}
 	}
-	public List<Rendezvous> getAllParkingsUniques(){
+	public List<Rendezvous> getAllRvUniques(){
 		//List<Classe> xx=new ArrayList<Classe>();
 	    Session session = sessionFactory.openSession ( );
 	    String SQL_QUERY ="from Rendezvous";
@@ -265,33 +265,16 @@ Session session;
 	   // session.close();*/
 	    return xx;	
 	}
-	public Rendezvous getParkingById(int idparking){
+	public Rendezvous getRendezvousById(int idRendezvous){
 		//List<Classe> xx=new ArrayList<Classe>();
 	    Session session = sessionFactory.openSession ( );
-	    String SQL_QUERY ="from Rendezvous where idparking=:id";
+	    String SQL_QUERY ="from Rendezvous where idRendezvous=:id";
 	    Query query = session.createQuery (SQL_QUERY);
-	    query.setInteger("id", idparking);
+	    query.setInteger("id", idRendezvous);
 	    @SuppressWarnings("rawtypes")
 		Rendezvous parking=(Rendezvous) query.uniqueResult();
 	    return parking;
-	}
-	public List<Rendezvous> getParkingsByIdDepartement(Departement departement){
-		 session = sessionFactory.openSession();
-
-		try{Criteria crit = session.createCriteria(Rendezvous.class);
-		crit.add(Restrictions.eq("departement", departement));
-			@SuppressWarnings("rawtypes")
-			List l=crit.list();
-			/*session.close();*/
-		    List<Rendezvous> res=(ArrayList<Rendezvous>)l;
-
-			return  res;
-		}
-		catch(Exception e) {
-			// Critical errors : database unreachable, etc.
-			session.close();
-			return null;
-		}
+	
 	}
 
 	
