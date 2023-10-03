@@ -88,7 +88,7 @@ Session session;
 			 session = sessionFactory.openSession();
 			// create a new criteria
 			Criteria crit = session.createCriteria(Structuredesante.class);
-			crit.add(Restrictions.eq("idparking", id));
+			crit.add(Restrictions.eq("idStructuresante", id));
 
 			Structuredesante s = (Structuredesante)crit.uniqueResult();
 			if (s==null){session.close();return null;}
@@ -154,14 +154,14 @@ Session session;
 			return null;
 		}
 	}
-	public  Structuredesante findIfNumCarteExistePourAutreParking(String login, int idparking) {
+	public  Structuredesante findIfNumCarteExistePourAutreParking(String login, int idStructuresante) {
 		Session session=null;
 		try {
 			 session = sessionFactory.openSession();
 			// create a new criteria
 			Criteria crit = session.createCriteria(Structuredesante.class);
 			crit.add(Restrictions.eq("login", login.trim()));
-			crit.add(Restrictions.ne("idparking", idparking));
+			crit.add(Restrictions.ne("idStructuresante", idStructuresante));
 			Structuredesante structure = (Structuredesante)crit.uniqueResult();
 			if (structure==null){session.close();return null;}
 			else {session.close();return structure;}
@@ -268,7 +268,7 @@ Session session;
 	public Structuredesante getStructuredeSanteById(int idstructure){
 		//List<Classe> xx=new ArrayList<Classe>();
 	    Session session = sessionFactory.openSession ( );
-	    String SQL_QUERY ="from Structuredesante where idparking=:id";
+	    String SQL_QUERY ="from Structuredesante where idStructuresante=:id";
 	    Query query = session.createQuery (SQL_QUERY);
 	    query.setInteger("id", idstructure);
 	    @SuppressWarnings("rawtypes")
