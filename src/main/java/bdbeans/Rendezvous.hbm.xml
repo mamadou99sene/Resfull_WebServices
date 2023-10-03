@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 3 oct. 2023, 00:46:01 by Hibernate Tools 5.6.7.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="bdbeans.Rendezvous" optimistic-lock="none" schema="public" table="rendezvous">
+        <id name="idRendezvous" type="int">
+            <column name="id_rendezvous"/>
+            <generator class="assigned"/>
+        </id>
+        <many-to-one class="bdbeans.Structuredesante" fetch="select" name="structuredesante">
+            <column name="id_structuresante" not-null="true"/>
+        </many-to-one>
+        <many-to-one class="bdbeans.Utilisateur" fetch="select" name="utilisateur">
+            <column name="id_utilisateur" not-null="true"/>
+        </many-to-one>
+        <property name="date" type="date">
+            <column length="13" name="date"/>
+        </property>
+        <property name="heure" type="time">
+            <column length="15" name="heure"/>
+        </property>
+        <property name="typerendezvous" type="string">
+            <column length="254" name="typerendezvous"/>
+        </property>
+        <property name="status" type="string">
+            <column length="254" name="status"/>
+        </property>
+    </class>
+</hibernate-mapping>

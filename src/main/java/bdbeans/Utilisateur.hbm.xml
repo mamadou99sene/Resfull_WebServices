@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 3 oct. 2023, 00:46:01 by Hibernate Tools 5.6.7.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="bdbeans.Utilisateur" optimistic-lock="none" schema="public" table="utilisateur">
+        <id name="idUtilisateur" type="int">
+            <column name="id_utilisateur"/>
+            <generator class="assigned"/>
+        </id>
+        <property name="prenom" type="string">
+            <column length="100" name="prenom"/>
+        </property>
+        <property name="nom" type="string">
+            <column length="100" name="nom"/>
+        </property>
+        <property name="email" type="string">
+            <column length="100" name="email"/>
+        </property>
+        <property name="phone" type="string">
+            <column length="50" name="phone"/>
+        </property>
+        <property name="password" type="string">
+            <column length="50" name="password"/>
+        </property>
+        <set fetch="select" inverse="true" lazy="true" name="rendezvouses" table="rendezvous">
+            <key>
+                <column name="id_utilisateur" not-null="true"/>
+            </key>
+            <one-to-many class="bdbeans.Rendezvous"/>
+        </set>
+    </class>
+</hibernate-mapping>
