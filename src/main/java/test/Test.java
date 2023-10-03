@@ -15,8 +15,11 @@ public class Test {
 		u.setPhone("3367890989");
 		u.setPassword("JAURES344");
 		//new UtilisateurHome().persist(u);
-		List<Utilisateur> l=new UtilisateurHome().getAllUser();
-		System.out.print(l.size());
+		List<Utilisateur> l=new UtilisateurHome().getAllUserUniques();
+		System.out.print(l.get(1).getPrenom());
+		Utilisateur user= new UtilisateurHome().getUserById(1);
+		System.out.println(user.getEmail());
+		
 	}
 
 }
